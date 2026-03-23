@@ -48,19 +48,19 @@ This provides:
 ## 🚀 Live Demo
 
 #### 🔗 API Base URL:
-https://your-cloud-run-url](https://financial-risk-agent-1059652519537.asia-south1.run.app
+https://financial-risk-agent-1059652519537.asia-south1.run.app
 
 <img width="1920" height="932" alt="Root page" src="https://github.com/user-attachments/assets/e651113b-3331-4bd0-9691-97ce63b30e03" />
 
 
 #### 🔗 Swagger Docs:
-https://your-cloud-run-url/](https://financial-risk-agent-1059652519537.asia-south1.run.app/docs
+https://financial-risk-agent-1059652519537.asia-south1.run.app/docs
 
 <img width="1920" height="1012" alt="Swagger UI" src="https://github.com/user-attachments/assets/5118f504-3f2c-46ea-87d4-ec62d672795e" />
 
 
 #### 🔗 UI (Optional):
-https://your-cloud-run-url/ui](https://financial-risk-agent-1059652519537.asia-south1.run.app/ui
+https://financial-risk-agent-1059652519537.asia-south1.run.app/ui
 
 <img width="1615" height="825" alt="UI" src="https://github.com/user-attachments/assets/b424456a-a42f-42cd-a738-a0851d7f2daa" />
 
