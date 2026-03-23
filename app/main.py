@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from app.agent import analyze_financial_risk
+from app.agent import analyze_with_adk
 from app.schemas import RiskRequest, RiskResponse
 
 app = FastAPI(
@@ -29,4 +30,5 @@ def serve_ui():
 @app.post("/analyze", response_model=RiskResponse)
 def analyze(request: RiskRequest):
     result = analyze_financial_risk(request.text)
+    # result = analyze_with_adk(request.text)
     return result
