@@ -14,7 +14,8 @@
         }
 
         .chat-container {
-            width: 420px;
+            width: 80%;
+            height: 80%;
             background: #1e293b;
             padding: 20px;
             border-radius: 12px;
@@ -25,10 +26,12 @@
         }
 
         .messages {
-            height: 300px;
+            height: 75%;
             overflow-y: auto;
             margin-bottom: 10px;
             padding: 5px;
+            margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         .input-box {
@@ -54,21 +57,23 @@
         .msg {
             margin: 6px 0;
             white-space: pre-line;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .user {
-            color: #38bdf8;
+            color: #ffffff;
         }
 
         .bot {
-            color: #22c55e;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
 <div class="chat-container">
-    <h2>💰 Risk Analyzer</h2>
+    <h2>💰 Financial Risk Analyzer</h2>
 
     <div class="messages" id="messages"></div>
 
@@ -81,9 +86,14 @@
 <script>
 const API_URL = "/analyze"; // ✅ relative path (important)
 
-function addMessage(text, className) {
+function addMessage(text, className, riskLevel=null) {
     const div = document.createElement("div");
     div.className = "msg " + className;
+
+    if (riskLevel === "High") div.style.color = "#ef4444";
+    else if (riskLevel === "Medium") div.style.color = "#facc15";
+    else if (riskLevel === "Low") div.style.color = "#22c55e";
+
     div.innerText = text;
     document.getElementById("messages").appendChild(div);
 }
@@ -94,7 +104,7 @@ async function sendMessage() {
 
     if (!text) return;
 
-    addMessage("You: " + text, "user");
+    addMessage("YOU  :  \n" + text, "user");
     input.value = "";
 
     try {
@@ -108,20 +118,23 @@ async function sendMessage() {
 
         const data = await response.json();
 
-        const reply =
-`Risk Level: ${data.risk_level}
+        const reply = `
+📊 Risk Level: ${data.risk_level}
 
-Reason: ${data.reason}
+🧠 Summary:
+${data.summary}
 
-Summary: ${data.summary}
+⚠️ Key Reason:
+${data.reason}
 
-Improvements:
-- ${data.improvements?.join("\n- ") || "N/A"}
+✅ Improvements:
+${data.improvements?.map(i => "• " + i).join("\n") || "N/A"}
 
-Stability Plan:
-- ${data.stability_plan?.join("\n- ") || "N/A"}`;
+📈 Stability Plan:
+${data.stability_plan?.map(i => "• " + i).join("\n") || "N/A"}
+`;
 
-        addMessage(reply, "bot");
+        addMessage("\nAI RESPONSE  :  "+ reply, "bot", data.risk_level);
 
     } catch (err) {
         addMessage("⚠️ Error connecting to API", "bot");
