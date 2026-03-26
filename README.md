@@ -44,6 +44,11 @@ This provides:
 ### 👉 This system acts like a personal financial advisor powered by AI
 
 ---
+## Process Flow diagram
+
+<img width="1556" height="616" alt="Screenshot 2026-03-26 224431" src="https://github.com/user-attachments/assets/d50c7b02-3299-4cd5-a4de-be550b1caa8e" />
+
+---
 
 ## 🚀 Live Demo
 
