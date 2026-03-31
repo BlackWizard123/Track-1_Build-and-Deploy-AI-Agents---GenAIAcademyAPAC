@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Risk Analyzer</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 80%;
+            height: 80%;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .messages {
+            height: 75%;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 5px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .input-box {
+            display: flex;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 10px;
+            background: #38bdf8;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .msg {
+            margin: 6px 0;
+            white-space: pre-line;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user {
+            color: #ffffff;
+        }
+
+        .bot {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <h2>💰 Financial Risk Analyzer</h2>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="input-box">
+        <input id="input" placeholder="Enter financial details..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+const API_URL = "/analyze"; // ✅ relative path (important)
+
+function addMessage(text, className, riskLevel=null) {
+    const div = document.createElement("div");
+    div.className = "msg " + className;
+
+    if (riskLevel === "High") div.style.color = "#ef4444";
+    else if (riskLevel === "Medium") div.style.color = "#facc15";
+    else if (riskLevel === "Low") div.style.color = "#22c55e";
+
+    div.innerText = text;
+    document.getElementById("messages").appendChild(div);
+}
+
+async function sendMessage() {
+    const input = document.getElementById("input");
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    addMessage("YOU  :  \n" + text, "user");
+    input.value = "";
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: text })
+        });
+
+        const data = await response.json();
+
+        const reply = `
+📊 Risk Level: ${data.risk_level}
+
+🧠 Summary:
+${data.summary}
+
+⚠️ Key Reason:
+${data.reason}
+
+✅ Improvements:
+${data.improvements?.map(i => "• " + i).join("\n") || "N/A"}
+
+📈 Stability Plan:
+${data.stability_plan?.map(i => "• " + i).join("\n") || "N/A"}
+`;
+
+        addMessage("\nAI RESPONSE  :  "+ reply, "bot", data.risk_level);
+
+    } catch (err) {
+        addMessage("⚠️ Error connecting to API", "bot");
+    }
+}
+</script>
+
+</body>
+</html>
